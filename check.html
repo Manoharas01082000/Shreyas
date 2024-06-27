@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Hover Change</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cochin&display=swap');
+        /* Reset and basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+        }
+        /* menu part */
+        /* Menu */
+           /* Example CSS for sub-menu */
+           .header {
+    position: fixed;
+    top: 40px; /* Adjusted for the initial position below .top-links */
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 999;
+    box-shadow: 0px 2px 4px #998570;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: top 0.3s; /* Smooth transition for top position */
+}
+
+.top-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #998570;
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    top: -40px; /* Initially hidden above the viewport */
+    left: 0;
+    z-index: 1000;
+    transition: top 0.3s;
+}
+
+.top-links a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    flex: 0 0 auto; /* Prevents logo from shrinking */
+}
+
+.menu-ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.menu-ul li {
+    position: relative;
+    margin-right: 20px;
+}
+
+.menu-ul li a {
+    color: #998570;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.menu-ul li:hover > a {
+    color: #998570;
+}
+
+.sub-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 8px 16px #998570;
+    z-index: 1;
+    width: 200px;
+    padding: 10px;
+}
+
+.menu-ul li:hover .sub-menu {
+    display: block;
+}
+
+.sub-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sub-menu ul li {
+    padding: 8px 0;
+}
+
+.booking-panel {
+    flex: 0 0 auto;
+}
+
+.button-book {
+    background-color: #998570;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.button-book:hover {
+    background-color: #998570;
+}
+
+/*  end */
+        .top-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #998570;
+            color: white;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: -40px; /* Hide above the viewport initially */
+            left: 0;
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+
+        .top-links a {
+            color:white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+/*top link */
+        .menu-bar {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color:transparent;
+            color: black;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 20px;
+            z-index: 999;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-bar .left, .menu-bar .center, .menu-bar .right {
+            flex: 1;
+        }
+
+        .menu-bar .center {
+            text-align: center;
+        }
+
+        .menu-bar .right {
+            text-align: right;
+        }
+
+        .image-container {
+            width: 100vw; /* Full viewport width */
+            height: 500px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        } 
+
+        .image-container img {
+            width: 100%; /* Ensure the image fills its container */
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease-in-out; /* Smooth transition */
+        }
+
+        .image-text {
+            position: absolute;
+            bottom: 20px; /* Adjust as needed */
+            left: 20px; /* Adjust as needed */
+            color: white;
+            font-size: 18px;
+            text-shadow: 1px 1px 2px #998570; /* Example text shadow for better visibility */
+            z-index: 10;
+        }
+
+        .link {
+            color: #998570;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .content {
+            margin-top: 60px; /* Adjust based on the height of the navigation bar */
+            padding: 20px;
+        }
+
+        /* footer part */
+
+        .dk-footer {
+            background-color: #111;
+            color: white;
+            padding: 10px 100px;
+        }
+
+        .dk-footer .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            background-color: #111;
+        }
+
+        .dk-footer .contact-row{
+        /*.dk-footer .footer-content-row */ 
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+
+        .dk-footer .contact-row .contact-item
+        /*.dk-footer .footer-content-row  > div */ {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .dk-footer .contact-row .contact-item i
+        /*.dk-footer .footer-content-row i*/ {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: darkgreen;
+        }
+
+        .dk-footer .contact-row .contact-text,
+        /*.dk-footer .footer-content-row */ .contact-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .dk-footer .contact-row  .contact-item {
+            margin-bottom: 20px;
+        } 
+        .dk-footer .footer-content-row {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                    padding-bottom: 60px; /* Space below the rows */
+                    padding-top: 20px;
+                }
+
+        .dk-footer .contact-row div,
+        .dk-footer .footer-content-row > div {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .dk-footer .contact-row div i,
+        .dk-footer .footer-content-row i {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        .dk-footer .footer-logo-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dk-footer .footer-logo img {
+            max-width: 100px;
+            height: auto;
+        }
+
+        .dk-footer-box-info ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .dk-footer-box-info ul li {
+            display: inline-block;
+            margin-right: 100px;
+        }
+
+        .dk-footer-box-info ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .contact-us {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .contact-icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .contact-info p,
+        .contact-info h4,
+        .contact-info a {
+            margin: 0;
+            color: white;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .mapouter {
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .gmap_canvas iframe {
+            width: 100%;
+            height: 250px;
+        }
+
+        .copyright {
+            background-color: #222;
+            padding: 10px 0;
+        }
+
+        .copyright span {
+            color: #ccc;
+        }
+
+        .go-top {
+            display: block;
+            text-align: right;
+            margin-top: 10px;
+            margin-right: 40px;
+            color: #998570;
+            text-decoration: none;
+        }
+
+        .go-top:hover {
+            text-decoration: underline;
+        }
+
+        .horizontal-line {
+            width: 100%;
+            height: 1px;
+            background-color: #666;
+            margin: 10px 0;
+        }
+
+        .label {
+            font-size: 1.2em; /* Slightly larger font size */
+            font-family: "Cochin", serif; /* Cochin style */
+        }
+
+        .transparent-text {
+            color: rgba(255, 255, 255, 0.7); /* Transparent text color */
+            text-wrap:wrap;
+        }
+
+        /*wecome slid */
+        .welcome-container {
+            font-family: 'Brush Script MT', cursive;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: slideIn 3s ease-in-out forwards;
+            z-index: 1;
+            background: linear-gradient(135deg, #4CAF50, #FFEB3B);
+            color: transparent;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .welcome-content {
+            text-align: center;
+        }
+        @keyframes slideIn {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes slideOut {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+        .index-content {
+            opacity: 0;
+            animation: fadeInIndex 2s ease-in-out forwards;
+        }
+        @keyframes fadeInIndex {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes rainbowText {
+            0% { color: #ff0000; }
+            12.5% { color: #ff7f00; }
+            25% { color: #ffff00; }
+            37.5% { color: #00ff00; }
+            50% { color: #0000ff; }
+            62.5% { color: #8b00ff; }
+            75% { color: #ff0000; }
+            87.5% { color: #ff7f00; }
+            100% { color: #ffff00; }
+        }
+        .rainbow-text {
+            animation: rainbowText 4s linear infinite;
+        }
+         /* After image */
+        /* Container CSS */
+/* Container CSS */
+.container {
+    position: relative;
+    text-align: center;
+    color: #998570;
+    background-color: #f5f5f5; /* Background color */
+    padding: 20px 0; /* Reduced padding for spacing */
+}
+
+.text-overlay {
+    padding: 10px;
+    border-radius: 10px;
+    text-align: justify;
+    max-width: 1200px; /* Increase the width of the text block */
+    margin: 0 auto; /* Center the text block */
+    font-family: 'Cochin', serif; /* Apply Cochin font */
+}
+
+.text-overlay h1 {
+    text-align: center;
+    font-size: 2.0em; /* Maintain the same font size */
+    color: #998570;
+    margin-bottom: 20px;
+}
+
+.text-overlay .divider {
+    width: 50px; /* Adjust divider width as needed */
+    height: 4px; /* Divider thickness */
+    background-color: #998570; /* Divider color */
+    margin: 10px auto; /* Center the divider and add margin */
+}
+
+.text-overlay p {
+    font-size: 1.2em; /* Maintain the same font size */
+    color: #998570;
+    margin: 0 20px; /* Adjusted margin for less space on sides */
+    line-height: 1.6; /* Adjust line height for better spacing */
+}
+
+        /* wecome page */
+        .welcome-container {
+            font-family: 'Brush Script MT', cursive;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: slideIn 3s ease-in-out forwards;
+            z-index: 1;
+            background: linear-gradient(135deg, #4CAF50, #FFEB3B);
+            color: transparent;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .welcome-content {
+            text-align: center;
+        }
+        @keyframes slideIn {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes slideOut {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+        .index-content {
+            opacity: 0;
+            animation: fadeInIndex 2s ease-in-out forwards;
+        }
+        @keyframes fadeInIndex {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes rainbowText {
+            0% { color: #ff0000; }
+            12.5% { color: #ff7f00; }
+            25% { color: #ffff00; }
+            37.5% { color: #00ff00; }
+            50% { color: #0000ff; }
+            62.5% { color: #8b00ff; }
+            75% { color: #ff0000; }
+            87.5% { color: #ff7f00; }
+            100% { color: #ffff00; }
+        }
+        .rainbow-text {
+            animation: rainbowText 4s linear infinite;
+        }
+        /*  iamge */
+        .containers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 15px 150px; /* Add more padding on the left and right */
+        }
+        .sections {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+        .sections img {
+            width: 500px;
+            height: 80%;
+            box-shadow: 0 16px 36px #998570;
+            margin-top: 0%;
+        }
+        .reverses {
+            flex-direction: row-reverse;
+        }
+        .disorder-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .disorder {
+            background-color: #998570; /* Set the background color */
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .card {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #998570;
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+        .card p, .card ul {
+            margin: 0 0 10px;
+        }
+        .card ul {
+            padding-left: 20px;
+        }
+        .card ul li {
+            list-style-type: disc;
+        }
+        /* Static Inquiry Button CSS */
+        /* Static Inquiry Button CSS */
+        .inquiry-button {
+            position: fixed;
+            right: 5px; /* 5px gap from the right side */
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .inquiry-button a {
+            text-decoration: none;
+            color: white;
+            background-color: #998570;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .inquiry-button a:hover {
+            background-color: #d1478e;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="inquiry-button">
+        <a href="inquiry.html">I<br>n<br>q<br>u<br>i<br>r<br>y<br> <br>N<br>o<br>w</a>
+    </div>
+    <div class="background-animation"></div>
+    <div class="welcome-container" id="welcome-container">
+        <div class="welcome-content">
+            <img src="logo.png" alt="Logo" class="logo">
+            <div id="welcome-message" style="font-size: 2em; font-weight: bold;" class="rainbow-text">Welcome to Shreyas</div>
+        </div>
+    </div>
+    <div class="top-links" id="topLinks">
+        <a href="#" class="link">Location</a>
+        <a href="#" class="link">WhatsApp</a>
+    </div>
+    <header class="header">
+        <div class="wrapper">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logo.png" alt="logo">
+                </a>
+            </div>
+    
+            <nav id="navMenu">
+                <ul class="menu-ul">
+                    <li id="pnav218">
+                        <a href="yoga.html">Yoga</a>
+                        <div class="sub-menu">
+                            <ul>
+                                <li><a href="yoga.html">Yoga Experience</a></li>
+                                <li><a href="ashtanga-yoga-retreats.html">Ashtanga Yoga</a></li>
+                                <li><a href="hathayoga.html">Hatha Yoga</a></li>
+                                <li><a href="yoga&spirtuality.html">Yoga & Spirituality</a></li>
+                                <li><a href="yoga-processes.html">Yoga Processes</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="pnav13">
+                        <a href="#">Anaha Spa</a>
+                        <div class="sub-menu">
+                            <ul>
+                                <li><a href="wellness.html">Treatment Centre</a></li>
+                                <li><a href="ayurveda-therapy.html">Ayurveda Therapy</a></li>
+                                <li><a href="naturopathy.html">Naturopathy</a></li>
+                                <li><a href="rejuvenation-massages.html">Rejuvenation Massages</a></li>
+                                <li><a href="beautytreatments.html">Skin Care</a></li>
+                                <li><a href="css/anaha_spa_menu.pdf" target="_blank">Anaha Treatments Menu</a></li>
+                                <li><a href="medical.html">Medical Treatments</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="pnav243">
+                        <a href="panchakarma.html">Panchakarma</a>
+                    </li>
+                    <li id="pnav245">
+                        <a href="#">Accommodation</a>
+                        <div class="sub-menu">
+                            <ul>
+                                <li><a href="poolside-cottages.html">Poolside Cottages</a></li>
+                                <li><a href="gardentented.html">Garden Tented Cottages</a></li>
+                                <li><a href="3-bedroom-cottage.html">3 Bedroom Cottage</a></li>
+                                <li><a href="gardensuitecottage.html">GARDEN SUITE COTTAGES</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="pnav246">
+                        <a href="#">About Us</a>
+                        <div class="sub-menu">
+                            <ul>
+                                <li><a href="aboutus.html">About Shreyas</a></li>
+                                <li><a href="facilities.html">Facilities</a></li>
+                                <li><a href="guest-book.html">Guest Book</a></li>
+                                <li><a href="communityservice.html">Community service</a></li>
+                                <li><a href="media&awards.html">Media & Awards</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="pnav259">
+                        <a href="#">Packages</a>
+                        <div class="sub-menu">
+                            <ul>
+                                <li><a href="Panchakarmapackages.html">Panchakarma</a></li>
+                                <li><a href="silentretreat.html">Silent Retreat</a></li>
+                                <li><a href="ayurvedarejanuation.html">Ayurveda Rejuvenation</a></li>
+                                <li><a href="yogaretreat.html">Yoga Retreat</a></li>
+                                <li><a href="joypackages.html">The Joy of Giving</a></li>
+                                <li><a href="wellnesssoul.html">Wellness For The Soul</a></li>
+                                <li><a href="weightmanagement.html">Weight Management</a></li>
+                                <li><a href="culinarypackages.html">Culinary Experience</a></li>
+                                <li><a href="detox.html">Detox</a></li>
+                                <li><a href="nightlyrates.html">Nightly Rates</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="pnav260">
+                        <a href="#">Plan Your Stay</a>
+                        <div class="sub-menu">
+                            <ul>
+                                <li><a href="location.html">Location</a></li>
+                                <li><a href="weather.html">Weather</a></li>
+                                <li><a href="visa.html">Visa Information</a></li>
+                                <li><a href="excursion.html">Excursions</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="pnav26"><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+    
+            <div class="booking-panel">
+                <a href="https://be.synxis.com/?&chain=8565&hotel=51535&theme=Shreyastheme&config=Shreyasconfig&themeCache=false&clearcache=all&notrack=true">
+                    <button type="button" class="button button-book">
+                        <span>Book Your Stay</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </header>
+        
+    <div class="image-container" id="imageContainer">
+        <img src="sarvanga_abhyangam.jpg" alt="Image 1" id="hoverImage">
+        <div class="image-text" style="color: #947655;">
+            A JOURNEY OF SELF DISCOVERY
+            <br>
+            Welcome to Shreyas Retreat
+        </div>
+    </div>
+    <div class="container">
+        <div class="text-overlay">
+            <h1>MEDICAL TREATMENTS</h1>
+            <div class="divider"></div>
+            <p>
+                Shreyas follows a holistic approach in treating and managing the ailments through Ayurveda, Panchakarma, Naturopathy, Detox Diet, Yoga, Pranayama, Meditation, and Counselling sessions. Based on the specific condition, chronicity, affected body part or system (nervous system, digestive system, etc.), past illness, allergic factors, and with the consolidated inputs from our in-house Ayurveda and Naturopathy consultants, Yoga and Meditation Teachers, an appropriate treatment plan is scheduled that hastens the convalescence period.
+            </p>
+        </div>
+    </div>
+    <h2 style="color: #998570;text-align: center;margin-top: 20px;">Ailments Treated And Managed:</h2>
+    <div class="containers">
+        <div class="sections">
+            <img src="ayur-side.jpg" alt="Placeholder Image">
+            <div class="disorder-list">
+                <div class="disorder" onclick="toggleCard(1)"><H3>MUSCULOSKELETAL DISORDERS</H3></div>
+                <div class="card" id="card-1">
+                    <p>Musculoskeletal disorders constitute a major cause of disability and morbidity globally. We not only offer a wide range of therapies but also educate people to have a better understanding of healthy musculoskeletal ageing and risk factors associated with premature ageing.</p>
+                    <ul>
+                        <li>Pain management</li>
+                        <li>Tendonitis</li>
+                        <li>Sciatica</li>
+                        <li>Frozen Shoulder</li>
+                        <li>Gout</li>
+                        <li>Tennis Elbow</li>
+                        <li>Calcaneal Spur</li>
+                        <li>Spondylitis</li>
+                        <li>Scoliosis</li>
+                        <li>Osteoporosis/Osteopenia</li>
+                        <li>Osteoarthritis</li>
+                        <li>Rheumatoid Arthritis</li>
+                        <li>Herniated/Ruptured Disc</li>
+                        <li>Disc Bulge</li>
+                        <li>Ligament Strain/Inflammation</li>
+                        <li>Carpal/Radial Tunnel Syndrome</li>
+                    </ul>
+                <!--    <img src="disorder1.jpg" alt="Disorder 1 Image">-->
+                </div>
+                <div class="disorder" onclick="toggleCard(2)">Disorder 2</div>
+                <div class="card" id="card-2">
+                    <p>Details about Disorder 2...</p>
+                <!--    <img src="disorder2.jpg" alt="Disorder 2 Image">-->
+                </div>
+                <div class="disorder" onclick="toggleCard(3)">Disorder 3</div>
+                <div class="card" id="card-3">
+                    <p>Details about Disorder 3...</p>
+                <!--     <img src="disorder3.jpg" alt="Disorder 3 Image">-->
+                </div>
+            </div>
+        </div>
+        <div class="sections reverses">
+            <img src="12 patrpindaswedam.jpg" alt="Placeholder Image">
+            <div class="disorder-list">
+                <div class="disorder" onclick="toggleCard(4)">Disorder 4</div>
+                <div class="card" id="card-4">
+                    <p>Details about Disorder 4...</p>
+                 <!--    <img src="disorder4.jpg" alt="Disorder 4 Image">-->
+                </div>
+                <div class="disorder" onclick="toggleCard(5)">Disorder 5</div>
+                <div class="card" id="card-5">
+                    <p>Details about Disorder 5...</p>
+                <!--    <img src="disorder5.jpg" alt="Disorder 5 Image">-->
+                </div>
+                <div class="disorder" onclick="toggleCard(6)">Disorder 6</div>
+                <div class="card" id="card-6">
+                    <p>Details about Disorder 6...</p>
+                <!--     <img src="disorder6.jpg" alt="Disorder 6 Image">-->
+                </div>
+            </div>
+        </div>
+        <div class="sections">
+            <img src="Kashayadhara.jpg" alt="Placeholder Image">
+            <div class="disorder-list">
+                <div class="disorder" onclick="toggleCard(7)">Disorder 7</div>
+                <div class="card" id="card-7">
+                    <p>Details about Disorder 7...</p>
+                  <!--   <img src="disorder7.jpg" alt="Disorder 7 Image">-->
+                </div>
+                <div class="disorder" onclick="toggleCard(8)">Disorder 8</div>
+                <div class="card" id="card-8">
+                    <p>Details about Disorder 8...</p>
+                <!--     <img src="disorder8.jpg" alt="Disorder 8 Image">-->
+                </div>
+                <div class="disorder" onclick="toggleCard(9)">Disorder 9</div>
+                <div class="card" id="card-9">
+                    <p>Details about Disorder 9...</p>
+                <!--     <img src="disorder9.jpg" alt="Disorder 9 Image">-->
+                </div>
+            </div>
+        </div>
+        <div class="sections reverses">
+            <img src="14 shtahwadi kzhi.jpg" alt="Placeholder Image">
+            <div class="disorder-list">
+                <div class="disorder" onclick="toggleCard(10)">Disorder 10</div>
+                <div class="card" id="card-10">
+                    <p>Details about Disorder 10...</p>
+                <!--     <img src="disorder10.jpg" alt="Disorder 10 Image">-->
+                </div>
+                <div class="disorder" onclick="toggleCard(11)">Disorder 11</div>
+                <div class="card" id="card-11">
+                    <p>Details about Disorder 11...</p>
+                 <!--    <img src="disorder11.jpg" alt="Disorder 11 Image">-->
+                </div>
+                <div class="disorder" onclick="toggleCard(12)">Disorder 12</div>
+                <div class="card" id="card-12">
+                    <p>Details about Disorder 12...</p>
+                <!--    <img src="disorder12.jpg" alt="Disorder 12 Image">-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="dk-footer" class="dk-footer">
+        <div class="container">
+            <div class="contact-row">
+                <div class="contact-item">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <div class="contact-text">
+                        <strong class="label" style="color: white;">Find us</strong><br>
+                        <span class="transparent-text">Santoshima Farm, Gollahalli Gate<br> Nelamangala, Bangalore, India</span>
+                    </div>
+                </div>
+                <div class="contact-item" style="text-align: center;">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    <div class="contact-text">
+                        <strong class="label" style="color: white;">Call us</strong><br>
+                        <span class="transparent-text">+919916110434</span>
+                    </div>
+                </div>
+                <div class="contact-item" style="text-align: right;">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <div class="contact-text">
+                        <strong class="label" style="color: white;">Mail us</strong><br>
+                        <span class="transparent-text">reservations@shreyasretreat.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="horizontal-line"></div>
+            <div class="footer-content-row">
+                <div class="footer-logo-container">
+                    <div class="footer-logo">
+                        <a href="https://www.relaischateaux.com/us/india/shreyas-karnataka-bangalore?gclid=CjwKCAiA_9r_BRBZEiwAHZ_v17Q2tDkvu9fJYMu1DQqkEfA6bd09yZKfitXdHVmwhdWvHDoA8Z54aRoCNS4QAvD_BwE">
+                            <img src="footers_logo.png" alt="footer_logo">
+                        </a>
+                    </div>
+                    <div class="footer-logo">
+                        <a href="https://www.tripadvisor.in/Hotel_Review-g297628-d623189-Reviews-Shreyas_Yoga_Retreat-Bengaluru_Bangalore_District_Karnataka.html">
+                            <img src="footer_logo.png" alt="footer_logo">
+                        </a>
+                    </div>
+                    <div class="footer-logo">
+                        <a href="index.html">
+                            <img src="footers_logo.png" alt="footer_logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-us">
+                    <div class="contact-icon">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </div>
+                    <div class="contact-text" style="display: flex; flex-direction: column; align-items: flex-start;">
+                        <strong class="label" style="color: white;">USEFUL LINKS</strong><br>
+                        <a href="#"><span class="transparent-text">About Us</span></a><br>
+                        <a href="#"><span class="transparent-text">Terms</span></a><br>
+                        <a href="#"><span class="transparent-text">Media Awards</span></a><br>
+                    </div>
+                    
+                </div>
+                <div class="mapouter">
+                    <div class="gmap_canvas">
+                        <iframe width="100%" height="250" id="gmap_canvas" src="https://maps.google.com/maps?q=Shreyas+Retreat&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>    
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <span>Copyright © 2021, All Rights Reserved by Shreyas Retreat</span>
+                </div>
+                <!--<div class="col-md-6">
+                    <div class="copyright-menu">
+                         Additional Links can be added here 
+                    </div>
+                </div>-->
+                <div style="align-items: right;">
+                    <a href="#" class="go-top">Go Top</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const imageContainer = document.getElementById('imageContainer');
+    const hoverImage = document.getElementById('hoverImage');
+    const topLinks = document.getElementById('topLinks');
+    const menuBar = document.getElementById('menuBar');
+
+    const images = [
+        'choornapinda_swedam.jpg',
+        'Kashayadhara.jpg',
+        'ayur-side.jpg',
+        'sarvanga_abhyangam.jpg',
+        'takradhara.jpg',
+        'Dhanyamla_Swedam.jpg'
+    ];
+
+    let currentIndex = 0;
+    let hoverTimeout;
+
+    imageContainer.addEventListener('mouseenter', () => {
+        hoverTimeout = setInterval(() => {
+            currentIndex = (currentIndex + 1) % images.length;
+            hoverImage.src = images[currentIndex];
+        }, 1000); // Change image every second
+    });
+
+    imageContainer.addEventListener('mouseleave', () => {
+        clearInterval(hoverTimeout);
+        hoverImage.src = images[0]; // Reset to the first image
+    });
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY === 0) {
+            topLinks.style.top = '0'; // Show top links when at the top of the page
+            menuBar.style.top = '40px'; // Shift menu bar down to make space for top links
+        } else {
+            topLinks.style.top = '-40px'; // Hide top links when scrolled down
+            menuBar.style.top = '0'; // Bring menu bar back to the top position
+        }
+    });
+</script>
+<script>//slide script
+    document.addEventListener("DOMContentLoaded", function() {
+        const welcomeMessage = "Welcome to Shreyas";
+        const welcomeContainer = document.getElementById("welcome-container");
+        const indexContent = document.getElementById("index-content");
+
+        // Function to speak the welcome message
+        function speakWelcomeMessage(message) {
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(message);
+            synth.speak(utterance);
+        }
+
+        // Animate and speak the welcome message
+        welcomeContainer.addEventListener("animationstart", function() {
+            speakWelcomeMessage(welcomeMessage);
+        });
+
+        welcomeContainer.addEventListener("animationend", function() {
+            setTimeout(function() {
+                welcomeContainer.style.animation = 'slideOut 3s ease-in-out forwards';
+                setTimeout(function() {
+                    indexContent.style.opacity = '1';
+                }, 1500); // Delay to fade in index content after welcome screen slides out
+            }, 1000); // Speak welcome message after 1 second
+        });
+    });
+</script>
+<script>
+    function toggleCard(id) {
+        var card = document.getElementById('card-' + id);
+        if (card.style.display === 'block') {
+            card.style.display = 'none';
+        } else {
+            card.style.display = 'block';
+        }
+    }
+</script>
+<script>//menu
+   document.addEventListener("DOMContentLoaded", function() {
+    const menuButton = document.getElementById('menuButton');
+    const navMenu = document.getElementById('navMenu');
+    const hamburger = document.querySelector('.hamburger');
+    const submenuToggles = document.querySelectorAll('.submenu-toggle');
+    const menuItems = document.querySelectorAll('.menu-ul > ul > li');
+
+    if (menuButton && navMenu && hamburger) {
+        // Toggle main menu
+        menuButton.addEventListener('click', function() {
+            navMenu.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        });
+    }
+
+    // Toggle submenus on click for mobile devices
+    submenuToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(event) {
+            event.preventDefault();
+            const submenu = this.nextElementSibling;
+            if (submenu) {
+                submenu.classList.toggle('show');
+                this.classList.toggle('active');
+            }
+        });
+    });
+
+    // Show submenus on hover for desktop
+    menuItems.forEach(item => {
+        const submenu = item.querySelector('.submenu');
+        if (submenu) {
+            item.addEventListener('mouseenter', function() {
+                submenu.classList.add('show');
+            });
+            item.addEventListener('mouseleave', function() {
+                submenu.classList.remove('show');
+            });
+        }
+    });
+});
+
+</script>
+<script>
+    window.addEventListener('scroll', function() {
+        const topLinks = document.getElementById('topLinks');
+        const header = document.querySelector('.header');
+        if (window.scrollY === 0) {
+            topLinks.style.top = '0'; // Show the top-links when at the top
+            header.style.top = '40px'; // Move the header down to make room for the top-links
+        } else {
+            topLinks.style.top = '-40px'; // Hide the top-links when not at the top
+            header.style.top = '0'; // Move the header back up
+        }
+    });
+</script>
+
+
+</body>
+</html>
